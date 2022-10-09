@@ -3,12 +3,11 @@ import pandas as pd
 path = 'C:\\Users\\maxxx\\Desktop\\DaiVinchikProject\\maks_kostyshen\\profiles.csv'
 
 
-def read():
-    df = pd.read_csv(path, index_col="id")
+def __read_time(df_origin):
+    df = df_origin.copy()
 
-    df = __correct_columns(df)
-
-    df = __filter_incorrect(df)
+    df["u_date_time"] = pd.to_datetime(df["u_date_time"])
+    df["p_date_time"] = pd.to_datetime(df["p_date_time"])
 
     return df
 
@@ -34,3 +33,26 @@ def __filter_incorrect(df_origin):
 
     df = df.dropna(subset=["media1"])
     return df
+
+
+def read():
+    df = pd.read_csv(path, index_col="id")
+
+    df = __correct_columns(df)
+
+    df = __filter_incorrect(df)
+
+    df = __read_time(df)
+
+    return df
+
+
+
+
+
+
+
+
+
+
+
